@@ -1,0 +1,28 @@
+{
+  "environment": "web",
+  "source": "https://docs.google.com/document/d/1RkDaa4iiYhf5T6ZQ8RMdMCKzpJ7QEeGgILl88lNvumw",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2019-12-02T08:02:23Z",
+  "id": "esp32-audio-tutorial",
+  "duration": 0,
+  "title": "Exploring WiFi Mesh with the ESP32",
+  "author": "Matthias Boesl",
+  "summary": "In this tutorial you will learn some basics about embedded programming using the ESP32 as an example platform and get some knowledge about mesh WiFi",
+  "theme": "embedded-software",
+  "status": [
+    "draft"
+  ],
+  "category": [
+    "Embedded Software"
+  ],
+  "tags": [
+    "c",
+    "embedded software",
+    "esp32",
+    "wifi"
+  ],
+  "feedback": "https://github.com/locomuco/esp32-audio-tutorial/issues",
+  "url": "esp32-audio-tutorial"
+}
