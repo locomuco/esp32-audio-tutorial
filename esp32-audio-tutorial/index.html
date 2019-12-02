@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Exploring WiFi Mesh with the ESP32</title>
+  <title>Exploring Audio Processing with the ESP32</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -21,18 +21,17 @@
 </head>
 <body>
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
-  <google-codelab title="Exploring WiFi Mesh with the ESP32"
+  <google-codelab title="Exploring Audio Processing with the ESP32"
                   environment="web"
                   feedback-link="https://github.com/locomuco/esp32-audio-tutorial/issues">
     
       <google-codelab-step label="Welcome" duration="0">
-        <p>To the first codelab of the Embedded Meetup Group Munich</p>
+        <p>To the second codelab of the Embedded Meetup Group Munich</p>
 <h2><strong>What&#39;s the target audience of this tutorial?</strong></h2>
-<p>Everybody interested in programming C or C++</p>
-<p>No previous coding experience needed, but helpful</p>
-<h2><strong>What is an ESP32?</strong></h2>
-<p>The ESP32 is a low cost WiFi Chip</p>
-<p><img style="width: 624.00px" src="img/2207d1d682100539.png"></p>
+<p>Everybody interested in programming C or C++, Rust anyways :-)</p>
+<p>Previous coding experience is helpful</p>
+<h2><strong>What is an ESP32 LyraT?</strong></h2>
+<p>The ESP32 is a low cost Audio Board<img style="width: 624.00px" src="img/a00694f2d391b2eb.jpeg"><img style="width: 624.00px" src="img/ebfa03b390e5818f.png"></p>
 <ul>
 <li><a href="https://www.espressif.com/en/products/hardware/esp32/overview" target="_blank">https://www.espressif.com/en/products/hardware/esp32/overview</a></li>
 </ul>
@@ -41,7 +40,7 @@
 <li><strong>Git &amp; Github </strong>- learn the basics of source control</li>
 </ul>
 <p>This codelab will walk you through the process of setting up the environment to compile and program some example code to an ESP32 and start some own development to extend the functionality of the given sample</p>
-<aside class="special"><p>Any Feedback? Open an issue at <a href="https://github.com/locomuco/esp32-tutorial/issues" target="_blank">https://github.com/locomuco/esp32-tutorial/issues</a></p>
+<aside class="special"><p>Any Feedback? Open an issue at <a href="https://github.com/locomuco/esp32-tutorial/issues" target="_blank">https://github.com/locomuco/esp32-audio-tutorial/issues</a></p>
 </aside>
 <h2><strong>What you will build</strong></h2>
 <ul>
@@ -52,13 +51,13 @@
 <li>How to build / compile and debug a program for a Microcontroller</li>
 <li>How to program a Microcontroller with your compiled code</li>
 <li>How to create and run a task in a Embedded Device</li>
-<li>How to set up a Mesh Network ESP32 Mesh Development SDK</li>
+<li>Record Audio with the dev board and send it to a server</li>
 </ul>
 <h2><strong>What you&#39;ll need</strong></h2>
 <ul>
-<li>A ESP32 development board, preferably 3</li>
-<li>A computer running Linux, Windows, or macOS</li>
-<li>A USB cable to connect the dev board to your computer</li>
+<li>A ESP32 LyraT or Lyra mini dev board</li>
+<li>A computer running Linux</li>
+<li>A mini-USB cable to connect the dev board to your computer</li>
 <li>A text editor, or the IDE of your choice</li>
 <li>Basic knowledge of C</li>
 </ul>
@@ -101,13 +100,23 @@ tar -xzf ~/Downloads/xtensa-esp32-elf-linux32-1.22.0-80-g6c4433a-5.2.0.tar.gz</c
 <p>Install the git package</p>
 <pre><code>sudo apt-get install git</code></pre>
 <p>Set your git name and email</p>
-<pre><code>git config --global user.name &#34;John Doe&#34;
-git config --global user.email &#34;john.doe@gmail.com&#34;</code></pre>
+<pre><code>git config --global user.name &#34;Your Name&#34;
+git config --global user.email &#34;your.address@gmail.com&#34;</code></pre>
 <h2><strong>Getting the Source Code</strong></h2>
 <p>Checking out the espressif Mesh Development Kit can be done with following command, be sure to add the recursive option, to check out all the submodules. The submodules also contain a specific version of the ESP-IDF, the common</p>
-<pre><code>git clone --recursive https://github.com/espressif/esp-mdf.git</code></pre>
-<p>And export the path to your mesh development sdk</p>
-<pre><code>export MDF_PATH=~/esp/esp-mdf</code></pre>
+<pre><code>git clone --recursive https://github.com/espressif/esp-adf.git</code></pre>
+<p>The checked out source code holds it&#39;s own version of the IDF, so there is no need to set up an extra path</p>
+<pre><code>git tag</code></pre>
+<p>Will show you the following output, at the time, this tutorial is created</p>
+<p>v1.0</p>
+<p>v1.0-beta1</p>
+<p>v2.0-beta1</p>
+<p>v2.0-beta2</p>
+<p>As we want to go with the latest halfway stable release, we checkout</p>
+<pre><code>git checkout </code></pre>
+<p>v2.0-beta2</p>
+<p>And update all submodules of this repository</p>
+<pre><code>git submodule update --recursive</code></pre>
 <p><code>The sample project will just use the reference to the ESP-MDF and lives along with this tutorial in:</code></p>
 <pre><code>git clone https://github.com/locomuco/esp32-tutorial.git</code></pre>
 
@@ -196,167 +205,14 @@ Screen /dev/ttyUSB0 &lt;baudrate&gt; </pre>
 
       </google-codelab-step>
     
-      <google-codelab-step label="Creating a Thread" duration="0">
-        <h2>Hey, w<strong>hat is a thread?</strong></h2>
-<p>Without an multithreading OS, all commands are executed in a big loop, often referred to the ‘main&#39; loop. When software gets more complex, this approach sometimes cannot fulfill the realtime requirements, since every command is executed sequentially.</p>
-<p>Thus you want to set up and execute multiple loops in parallel, and allow them to interrupt each other.</p>
-<p>A thread is one of the split out loops containing it&#39;s own stack to hold ram content, and it&#39;s own priority with respect to the other threads flying around.</p>
-<h2><strong>OK, how can I create one?</strong></h2>
-<p>It&#39;s pretty simple, just look at the sample below.</p>
-<pre><code>static void my_first_thread(void *arg)
-{
-   MDF_LOGI(&#34;I&#39;m running&#34;);
-
-   while(1) {
-       vTaskDelay(500 / portTICK_RATE_MS);
-       MDF_LOGI(&#34;I&#39;m performing some periodic action&#34;);
-       //add more code here
-   }
-   vTaskDelete(NULL);
-}</code></pre>
-<p>Now let&#39;s see what it&#39;s doing:</p>
-<pre><code>   MDF_LOGI(&#34;I&#39;m running&#34;);</code></pre>
-<p>Just prints you the line in your DEBUG output, you can see it using the ‘make monitor&#39; build command</p>
-<pre><code>while(1) {
-       vTaskDelay(500 / portTICK_RATE_MS);
-       MDF_LOGI(&#34;I&#39;m performing some periodic action&#34;);
-       //add more code here
-   }</code></pre>
-<p>In the next step we see the loop performed in the thread, like the main loop, but encapsulated in it&#39;s own scope. The action performed is pretty simple, we&#39;re using some FreeRTOS primitive ‘vTaskDelay&#39; to block the task for 0,5 seconds, and print something while unblocked, this runs forever...</p>
-<p>To create the thread just use the following given FreeRTOS function. It needs:</p>
-<ul>
-<li>The thread function you just created with the previous code snippet</li>
-<li>a generic name, i used the function name</li>
-<li>The size of the stack, reserved for this thread</li>
-<li>Thread parameters (not used in our case)</li>
-<li>A thread priority, that indicates how important this thread is, compared to the other running ones</li>
-</ul>
-<pre><code>       xTaskCreate(my_first_thread, &#34;my_first_thread&#34;, 2 * 1024,
-                   NULL, 5, NULL);</code></pre>
-<h3><strong>Let&#39;s look, what we have until now:</strong></h3>
-<ul>
-<li>We have checked out the ESP32 Mesh Development Kit</li>
-<li>We have built our first sample from scratch</li>
-<li>We have created our first task, that prints something every 0,5 s</li>
-</ul>
-<p>OK, now that we can run a task, we want to blink a LED on our DEV board, below is a rudimentary implementation of the blinking LED task.</p>
-<p>Don&#39;t forget to create your task as described in the previous step</p>
-<pre><code>#include &#34;driver/gpio.h&#34;</code></pre>
-<pre><code>#define GPIO_LED 2
-
-void led_task(void *pvParameter)
-{
-   int blink_count = 0;
-   int i;
-   /* set PAD to GPIO mode */
-   gpio_pad_select_gpio(GPIO_LED);
-   /* Set the GPIO as a push/pull output */
-   gpio_set_direction(GPIO_LED, GPIO_MODE_OUTPUT);
-
-   MDF_LOGI(&#34;LED task is running&#34;);
-
-   while(1) {
-       for (i = 0; i &lt; blink_count; i++) {
-           gpio_set_level(GPIO_LED, 1);
-           vTaskDelay(100 / portTICK_PERIOD_MS);
-           gpio_set_level(GPIO_LED, 0);
-           vTaskDelay(100 / portTICK_PERIOD_MS);
-       }
-       vTaskDelay(1000 / portTICK_PERIOD_MS);
-   }
-}</code></pre>
-<aside class="special"><p>ESP32 is a 32-bit architecture, reads and writes to 32-bit variables are atomic. In this case we don&#39;t need to protect the delay variable, when accessed from different threads from the outside.</p>
+      <google-codelab-step label="Tutorial WiFi Network Setup" duration="0">
+        <p>We have one dedicated PC running with a server to collect all audio samples created by the nodes.</p>
+<aside class="special"><p>SSID: esp32</p>
+<p>WiFi password: tadotado</p>
+<p>Server resource: http://10.42.0.1:8000/upload</p>
 </aside>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="ESP32 WiFi Mesh" duration="0">
-        <p>The ESP32 mesh architecture consists of a root node, that acts as a gateway to the outside world, you can build this root node, setting the correct option in the menuconfig of the example.</p>
-<p>However, we have prepared a root node locally already, so you can concentrate on the nodes only.</p>
-<p>To limit the number of connections, you can set the following option in menuconfig</p>
-<pre><code>CONFIG_MWIFI_MAX_CONNECTION=2</code></pre>
-<p>With this setting applied our network topology will look like the picture below. Each intermediate node can only reach 2 more nodes in the Network</p>
-<p><img style="width: 624.00px" src="img/bbe0faf4dfa79b08.png"></p>
-<p>See below he menuconfig option to switch between the different modes</p>
-<p><img style="width: 624.00px" src="img/314228079280b795.png"></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Where am I in the network?" duration="0">
-        <p>Now we want to use a given Mesh API, to identify in which layer of the mesh we are located at the moment.</p>
-<pre><code>#include &#34;mlink.h&#34;</code></pre>
-<pre><code>esp_mesh_get_layer();</code></pre>
-<p>Just use this API to update your blink count, and you&#39;ll see, in which layer of the mesh you are currently</p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Whois?" duration="0">
-        <p>OK, now that we are all connected in a WiFi mesh - tree, whatever. We want to find out who is who in the network. Therefore the root node is broadcasting a message for a dedicated group of nodes. You&#39;re already part of this group.</p>
-<p>Your node read thread is already listening, and spitting out messages for that. Look out for following function in the code.</p>
-<pre><code>static void node_read_task(void *arg)</code></pre>
-<p>There is some statement for receiving a packet inside the mesh network</p>
-<pre><code>ret = mwifi_read(src_addr, &amp;data_type, data, &amp;size, portMAX_DELAY);</code></pre>
-<p>After that you can add following code to differentiate group messages from normal messages</p>
-<pre><code>       if (data_type.group &amp;&amp; data_type.custom == MESH_LIST_MAGIC) {
-            /* Interpret group broadcasts as mesh member list */
-            print_mesh_node_list((uint8_t *)data, size);
-        } else {
-            /* Print any other payload */
-            MDF_LOGI(&#34;Node receive, addr: &#34; MACSTR &#34;, size: %d, data: %s&#34;, MAC2STR(src_addr), size, data);
-        }
-</code></pre>
-<p>The function to parse and print the payload coming from the root is below</p>
-<pre><code>static void
-print_mesh_node_list(const uint8_t *buf, size_t buf_len)
-{
-    if (buf_len &lt; (sizeof(struct mesh_list_hdr) + sizeof(mesh_addr_t) * 1)) {
-        /* There should be at least one node (root) in the list. */
-        return;
-    }
-
-    /* Parse header */
-    struct mesh_list_hdr *hdr = (struct mesh_list_hdr *)buf;
-
-    /* Show entries */
-    mesh_addr_t *entries = (mesh_addr_t *)&amp;buf[sizeof(struct mesh_list_hdr)];
-
-    MDF_LOGI(&#34;Mesh node members:&#34;);
-    for (int i = 0; i &lt; hdr-&gt;num_entries; i++) {
-        mesh_addr_t *node = &amp;entries[i];
-        if ((uint8_t *)&amp;node &gt; &amp;buf[buf_len - 1]) {
-            MDF_LOGW(&#34;Node received mesh node list with too short buffer&#34;);
-            return;
-        }
-
-        MDF_LOGI(&#34;  &#34; MACSTR &#34;&#34;, MAC2STR(node-&gt;addr));
-    }
-}</code></pre>
-<p>What you will get is a list of MAC addresses, that are connected to the network. You can now send messages to the other participants using the function below..</p>
-<pre><code>void send_msg(void)
-{
-   mdf_err_t ret = MDF_OK;
-   int count     = 0;
-   size_t size   = 0;
-   char *data    = MDF_MALLOC(MWIFI_PAYLOAD_LEN);
-   mwifi_data_type_t data_type = {0x0};
-
-   size = sprintf(data, &#34;Tell &lt;your name&gt; &#34;);
-   ret = mwifi_write(NULL, &amp;data_type, data, size, true);
-   MDF_FREE(data);
-}
-</code></pre>
-<p>While the first argument of mwifi_write is the destination mac (NULL for root)</p>
-<pre><code>uint8_t dst_addr[MWIFI_ADDR_LEN] = {0x0};
-/* send to root */
-mwifi_write(NULL, &amp;data_type, data, size, true);
-/* send to node */
-mwifi_write(dst_addr, &amp;data_type, data, size, true);
-</code></pre>
-<p>Now it&#39;s up to you to find out who&#39;s who. Have fun finding out.</p>
-<p>Thanks for bearing with us during this codelab....</p>
+<p>These items can be configured through the menuconfig option: Example Configuration</p>
+<p><img style="width: 624.00px" src="img/85db1e33c7533a40.png"></p>
 
 
       </google-codelab-step>
