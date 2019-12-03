@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Exploring Audio Processing with the ESP32</title>
+  <title>haɪ ˈʤeɪsən</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -21,7 +21,7 @@
 </head>
 <body>
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
-  <google-codelab title="Exploring Audio Processing with the ESP32"
+  <google-codelab title="haɪ ˈʤeɪsən"
                   environment="web"
                   feedback-link="https://github.com/locomuco/esp32-audio-tutorial/issues">
     
@@ -241,6 +241,35 @@ Screen /dev/ttyUSB0 &lt;baudrate&gt; </pre>
         <p>The sample application can be found in</p>
 <pre>esp-adf/examples/recorder/pipeline_raw_http</pre>
 <p>If you press the record button, your voice will be recorded locally,, once released, it will be sent to the server.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Hi Jeson - haɪ ˈʤeɪsən" duration="0">
+        <p>The second sample application can be found in </p>
+<pre>esp-adf/examples/speech_recognition/asr/</pre>
+<p>This sample mimics, what Alexa does, the device has some keyword recognition running, and will wake up, as soon as the keyword is detected.</p>
+<p>As keywords you can pick from a list of chinese words.</p>
+<p>The keyword detection can be configured in menuconfig, just go to ESP Speech Recognition</p>
+<p><img style="width: 624.00px" src="img/3460a4c590a87494.png"></p>
+<p>In order to set the only halfway phonetic we need to select WakeNet 5</p>
+<p><img style="width: 624.00px" src="img/70aac964db29ab5c.png"></p>
+<p>This allows us to select &#34;Hi Jeson&#34; as keyword, which is basically pronounced like &#34;Hi JSON&#34;, might be derived from there :-)</p>
+<p><img style="width: 624.00px" src="img/cb4e7bf7b484f039.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Stitching it together" duration="0">
+        <p>The first &#34;programming&#34; step, is stitching together Part 1 &amp; 2</p>
+<p>Outcome should be, that you can send something to the server, without using the HW button, but rather keyword detection</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Sonic - changing the pitch" duration="0">
+        <p>The ADK also supports some libraries, that can work with the audio streams, e.g. changing pitch, the libraries are included in the sdk, and can be applied.</p>
+<p><a href="https://docs.espressif.com/projects/esp-adf/en/latest/api-reference/audio-processing/audio_sonic.html" target="_blank">https://docs.espressif.com/projects/esp-adf/en/latest/api-reference/audio-processing/audio_sonic.html</a></p>
 
 
       </google-codelab-step>
