@@ -115,6 +115,13 @@ git config --global user.email &#34;your.address@gmail.com&#34;</code></pre>
 <p>As we want to go with the latest halfway stable release, we checkout</p>
 <pre><code>git checkout </code></pre>
 <p>v2.0-beta2</p>
+<p>Export the ADF_PATH to have it in a global scope</p>
+<pre><code>cd esp-adf
+export ADF_PATH=$(pwd)</code></pre>
+<p><code>Or permanently with</code></p>
+<pre><code>cd esp-adf
+echo &#34;export ADF_PATH=$(pwd)&#34; &gt;&gt; ~/.profile</code></pre>
+<p><code>And it will be active in the next shell you open</code></p>
 <p>And update all submodules of this repository</p>
 <pre><code>git submodule update --recursive</code></pre>
 <p>To install the idf python requirements run</p>
