@@ -1,9 +1,14 @@
-import os, datetime, sys, urlparse
+import os, datetime, sys, urlparse, threading, time
 import SimpleHTTPServer, BaseHTTPServer
 import wave
+from Queue import Queue
+
+from pygame import mixer
 
 PORT = 8000
 HOST = '0.0.0.0'
+
+playback_queue = Queue()
 
 class Handler(SimpleHTTPServer.SimpleHTTPRequestHandler):
     def _set_headers(self, length):
@@ -32,7 +37,12 @@ class Handler(SimpleHTTPServer.SimpleHTTPRequestHandler):
         wavfile.setparams((ch, bits/8, rates, 0, 'NONE', 'NONE'))
         wavfile.writeframes(bytearray(data))
         wavfile.close()
+
         return filename
+
+    def do_GET(self):
+        self.send_response(403, 'forbidden')
+        return
 
     def do_POST(self):
         urlparts = urlparse.urlparse(self.path)
@@ -63,14 +73,43 @@ class Handler(SimpleHTTPServer.SimpleHTTPRequestHandler):
                     data += chunk_data
 
             filename = self._write_wav(data, int(sample_rates), int(bits), int(channel))
+
+            # Queue written file for playback.
+            playback_queue.put(filename)
+
             body = 'File {} was written, size {}'.format(filename, total_bytes)
             self._set_headers(len(body))
             self.wfile.write(body)
             self.wfile.close()
         else:
-            return SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
+            # Deny incorrect usage.
+            self.send_response(401, 'request not allowed')
+            return
+
+
+class Player(threading.Thread):
+    def run(self):
+        mixer.init(frequency=16000)
+        print('Audio server started')
+
+        while True:
+            audio_fp = playback_queue.get()
+            print('Received next file to play:', audio_fp)
+
+            while mixer.music.get_busy():
+                print('Already playing. Wait for 1s. More in queue:', playback_queue.unfinished_tasks)
+                time.sleep(1)
+
+            mixer.music.load(audio_fp)
+            print('Playing', audio_fp)
+            mixer.music.play()
+
+            playback_queue.task_done()
+
 
 httpd = BaseHTTPServer.HTTPServer((HOST, PORT), Handler)
+audio_player = Player()
+audio_player.start()
 
 print("Serving HTTP on {} port {}".format(HOST, PORT));
 httpd.serve_forever()
