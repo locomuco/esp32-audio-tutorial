@@ -31,7 +31,7 @@
 <p>Everybody interested in programming C or C++, Rust anyways :-)</p>
 <p>Previous coding experience is helpful</p>
 <h2><strong>What is an ESP32 LyraT?</strong></h2>
-<p>The ESP32 is a low cost Audio Board<img style="width: 624.00px" src="img/a00694f2d391b2eb.jpeg"><img style="width: 624.00px" src="img/ebfa03b390e5818f.png"></p>
+<p>The ESP32 LyraT and TyraT mini are two low cost Audio Boards<img style="width: 624.00px" src="img/4189e2202a1bfe81.png"><img style="width: 624.00px" src="img/a00694f2d391b2eb.jpeg"><img style="width: 624.00px" src="img/ebfa03b390e5818f.png"></p>
 <ul>
 <li><a href="https://www.espressif.com/en/products/hardware/esp32/overview" target="_blank">https://www.espressif.com/en/products/hardware/esp32/overview</a></li>
 </ul>
@@ -117,6 +117,8 @@ git config --global user.email &#34;your.address@gmail.com&#34;</code></pre>
 <p>v2.0-beta2</p>
 <p>And update all submodules of this repository</p>
 <pre><code>git submodule update --recursive</code></pre>
+<p>To install the idf python requirements run</p>
+<p>python -m pip install --user -r $IDF_PATH/requirements.txt</p>
 <p><code>The sample project will just use the reference to the ESP-MDF and lives along with this tutorial in:</code></p>
 <pre><code>git clone https://github.com/locomuco/esp32-tutorial.git</code></pre>
 
@@ -125,6 +127,13 @@ git config --global user.email &#34;your.address@gmail.com&#34;</code></pre>
     
       <google-codelab-step label="Connecting the ESP32 Board" duration="0">
         <p>Connecting the DEV-BOARD to your PC is done with a plain USB cable, the Dev Board holds a FTDI chip, that provides a serial interface to the ESP32.</p>
+<p>In order to set the bootloader in programming mode on the board:</p>
+<ol type="1" start="1">
+<li>Press RST Button</li>
+<li>Press Boot Button</li>
+<li>Release RST Button</li>
+<li>Release Boot Button</li>
+</ol>
 <p><img style="width: 624.00px" src="img/1f90719ce58a115e.png"></p>
 <pre>Windows  COM1
 Linux    /dev/ttyUSB..
@@ -132,6 +141,9 @@ macOS    /dev/cu</pre>
 <aside class="special"><p>In linux you user needs to be added to the <strong>dialout</strong> group with...</p>
 </aside>
 <pre><code>sudo usermod -a -G dialout $USER</code></pre>
+<p>For Arch Linux</p>
+<pre><code>sudo groupadd uucp
+sudo gpasswd &lt;username&gt; uucp</code></pre>
 
 
       </google-codelab-step>
@@ -144,6 +156,13 @@ macOS    /dev/cu</pre>
 <p>The esp-idf uses menuconfig to apply different configurations, just have a try and look through the different options.</p>
 <pre><code>make menuconfig</code></pre>
 <h2><img style="width: 624.00px" src="img/fe3333caf07c7ad0.png"></h2>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Hardware Selection" duration="0">
+        <p>In order to configure the SDK to use your Board HAL layer, select the correct configuration in menuconfig</p>
+<p><img style="width: 4279.46px" src="img/7e53ee3d3163110b.png"></p>
 
 
       </google-codelab-step>
@@ -211,8 +230,23 @@ Screen /dev/ttyUSB0 &lt;baudrate&gt; </pre>
 <p>WiFi password: tadotado</p>
 <p>Server resource: http://10.42.0.1:8000/upload</p>
 </aside>
+<p><img style="width: 3623.09px" src="img/9e19e414aa35209f.png"></p>
 <p>These items can be configured through the menuconfig option: Example Configuration</p>
 <p><img style="width: 624.00px" src="img/85db1e33c7533a40.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="The first sample application" duration="0">
+        <p>The sample application can be found in</p>
+<pre>esp-adf/examples/recorder/pipeline_raw_http</pre>
+<p>If you press the record button, your voice will be recorded locally,, once released, it will be sent to the server.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="The ADF SDK" duration="0">
+        <p><img style="width: 624.00px" src="img/ba548942c2a85dcb.png"></p>
 
 
       </google-codelab-step>
