@@ -26,10 +26,7 @@
                   feedback-link="https://github.com/locomuco/esp32-audio-tutorial/issues">
     
       <google-codelab-step label="Welcome" duration="0">
-        <p>To the second codelab of the Embedded Meetup Group Munich</p>
-<p>To communicate with others during the codelab, use</p>
-<aside class="special"><p><a href="http://collabedit.com/ymd4w" target="_blank">http://collabedit.com/ymd4w</a></p>
-</aside>
+        <p>...to the second codelab of the Embedded Meetup Group Munich</p>
 <h2><strong>What&#39;s the target audience of this tutorial?</strong></h2>
 <p>Everybody interested in programming C or C++, Rust anyways :-)</p>
 <p>Previous coding experience is helpful</p>
@@ -157,7 +154,9 @@ sudo gpasswd &lt;username&gt; uucp</code></pre>
       </google-codelab-step>
     
       <google-codelab-step label="Building the Firmware" duration="0">
-        <p>The Firmware in this tutorial will be built in the checked out esp32-tutorial repo you just checked out.</p>
+        <p>Go to the first example</p>
+<pre>esp-adf/examples/recorder/pipeline_raw_http</pre>
+<p>The Firmware in this tutorial will be built in the checked out esp32-tutorial repo you just checked out.</p>
 <h2><strong>Build and flash the project by running:</strong></h2>
 <p>Build your firmware using</p>
 <pre><code>make</code></pre>
@@ -253,6 +252,20 @@ Screen /dev/ttyUSB0 &lt;baudrate&gt; </pre>
 
       </google-codelab-step>
     
+      <google-codelab-step label="Sonic - changing the pitch" duration="0">
+        <p>The ADK also supports some libraries, that can work with the audio streams, e.g. changing pitch, the libraries are included in the sdk, and can be applied.</p>
+<p><a href="https://docs.espressif.com/projects/esp-adf/en/latest/api-reference/audio-processing/audio_sonic.html" target="_blank">https://docs.espressif.com/projects/esp-adf/en/latest/api-reference/audio-processing/audio_sonic.html</a></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Stitching it together" duration="0">
+        <p>The first &#34;programming&#34; step, is stitching together Part 1 &amp; 2</p>
+<p>Outcome should be, that you can send something to the server, without using the HW button, but rather keyword detection</p>
+
+
+      </google-codelab-step>
+    
       <google-codelab-step label="Hi Jeson - haɪ ˈʤeɪsən" duration="0">
         <p>The second sample application can be found in </p>
 <pre>esp-adf/examples/speech_recognition/asr/</pre>
@@ -268,22 +281,12 @@ Screen /dev/ttyUSB0 &lt;baudrate&gt; </pre>
 
       </google-codelab-step>
     
-      <google-codelab-step label="Stitching it together" duration="0">
-        <p>The first &#34;programming&#34; step, is stitching together Part 1 &amp; 2</p>
-<p>Outcome should be, that you can send something to the server, without using the HW button, but rather keyword detection</p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Sonic - changing the pitch" duration="0">
-        <p>The ADK also supports some libraries, that can work with the audio streams, e.g. changing pitch, the libraries are included in the sdk, and can be applied.</p>
-<p><a href="https://docs.espressif.com/projects/esp-adf/en/latest/api-reference/audio-processing/audio_sonic.html" target="_blank">https://docs.espressif.com/projects/esp-adf/en/latest/api-reference/audio-processing/audio_sonic.html</a></p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="The ADF SDK" duration="0">
-        <p><img style="width: 624.00px" src="img/ba548942c2a85dcb.png"></p>
+      <google-codelab-step label="Solutions" duration="0">
+        <p>The python server, that receives the audio samples is slightly modified to the original and can be found in</p>
+<p><a href="https://github.com/locomuco/esp32-audio-tutorial/pull/1/commits/e3f6d3aa7c4a2f42985d903d6586f42810716b12" target="_blank">https://github.com/locomuco/esp32-audio-tutorial/pull/1/commits/e3f6d3aa7c4a2f42985d903d6586f42810716b12</a></p>
+<p>The pitch change can be found at</p>
+<p><a href="https://github.com/locomuco/esp32-audio-tutorial/tree/sonic" target="_blank">https://github.com/locomuco/esp32-audio-tutorial/tree/sonic</a></p>
+<p>The combination of audio sampling / pitch / wakeup is still in progress :-)</p>
 
 
       </google-codelab-step>
