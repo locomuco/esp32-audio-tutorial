@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>haɪ ˈʤeɪsən</title>
+  <title>Exploring Audio Processing with the ESP32</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -21,7 +21,7 @@
 </head>
 <body>
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
-  <google-codelab title="haɪ ˈʤeɪsən"
+  <google-codelab title="Exploring Audio Processing with the ESP32"
                   environment="web"
                   feedback-link="https://github.com/locomuco/esp32-audio-tutorial/issues">
     
@@ -261,7 +261,11 @@ Screen /dev/ttyUSB0 &lt;baudrate&gt; </pre>
     
       <google-codelab-step label="Stitching it together" duration="0">
         <p>The first &#34;programming&#34; step, is stitching together Part 1 &amp; 2</p>
-<p>Outcome should be, that you can send something to the server, without using the HW button, but rather keyword detection</p>
+<p>When pressing the &#34;rec&#34; button, the device will record, change the pitch on the fly, and stream it to the server.</p>
+<p>Outcome should be, that the server reads the recording with double Pitch</p>
+<p>Example Solution</p>
+<aside class="special"><p><a href="https://github.com/locomuco/esp32-audio-tutorial/tree/sonic" target="_blank">https://github.com/locomuco/esp32-audio-tutorial/tree/sonic</a></p>
+</aside>
 
 
       </google-codelab-step>
@@ -284,9 +288,11 @@ Screen /dev/ttyUSB0 &lt;baudrate&gt; </pre>
       <google-codelab-step label="Solutions" duration="0">
         <p>The python server, that receives the audio samples is slightly modified to the original and can be found in</p>
 <p><a href="https://github.com/locomuco/esp32-audio-tutorial/pull/1/commits/e3f6d3aa7c4a2f42985d903d6586f42810716b12" target="_blank">https://github.com/locomuco/esp32-audio-tutorial/pull/1/commits/e3f6d3aa7c4a2f42985d903d6586f42810716b12</a></p>
-<p>The pitch change can be found at</p>
+<p>An example solution for changing the pitch can be found here</p>
 <p><a href="https://github.com/locomuco/esp32-audio-tutorial/tree/sonic" target="_blank">https://github.com/locomuco/esp32-audio-tutorial/tree/sonic</a></p>
-<p>The combination of audio sampling / pitch / wakeup is still in progress :-)</p>
+<p>Wake word detection + customized wake words was moved to </p>
+<p><a href="https://github.com/espressif/esp-skainet" target="_blank">https://github.com/espressif/esp-skainet</a></p>
+<p>by espressif</p>
 
 
       </google-codelab-step>

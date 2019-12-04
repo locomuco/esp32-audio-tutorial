@@ -4,12 +4,12 @@
   "format": "html",
   "prefix": "https://storage.googleapis.com",
   "mainga": "UA-49880327-14",
-  "updated": "2019-12-03T19:39:20Z",
+  "updated": "2019-12-04T07:23:39Z",
   "id": "esp32-audio-tutorial",
   "duration": 0,
-  "title": "haɪ ˈʤeɪsən",
-  "author": "Matthias Boesl",
-  "summary": "In this tutorial you will learn some basics about embedded programming using the ESP32 as an example platform and get some knowledge about mesh WiFi",
+  "title": "Exploring Audio Processing with the ESP32",
+  "author": "Matthias Boesl, Stefan Smarzly",
+  "summary": "In this tutorial you will learn some basics about embedded programming using the ESP32 as an example platform and get some knowledge about how audio pipelines work in the espressif SDKs",
   "theme": "embedded-software",
   "status": [
     "draft"
@@ -22,6 +22,7 @@
     "c",
     "embedded software",
     "esp32",
+    "keyword recognition",
     "wifi"
   ],
   "feedback": "https://github.com/locomuco/esp32-audio-tutorial/issues",
